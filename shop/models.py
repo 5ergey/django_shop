@@ -38,6 +38,9 @@ class Product(models.Model):
     def is_in_stock(self):
         return self.stock > 0
 
+    def __str__(self):
+        return f"{self.name}"
+
 # ------------------------------
 # Order / OrderItem
 # ------------------------------
@@ -117,6 +120,10 @@ class Order(models.Model):
         """
         cutoff = timezone.now() - timedelta(days=days)
         cls.objects.filter(status="pending", created_at__lt=cutoff).delete()
+
+
+    def __str__(self):
+        return f"{self.order_id} {self.status} {self.user}"
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
