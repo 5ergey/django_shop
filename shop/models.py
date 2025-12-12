@@ -88,6 +88,7 @@ class Order(models.Model):
         self.total_price = total
         self.save(update_fields=["total_price", "updated_at"])
 
+
     def to_pending(self):
         """
         Перевод корзины в заказ и генерация order_id.
