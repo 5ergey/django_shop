@@ -1,8 +1,13 @@
 from django.shortcuts import render
 from django.views import generic
+
+from shop.models import Product
+
+
 # Create your views here.
-class HomeView(generic.TemplateView):
-    pass
+class HomeView(generic.ListView):
+    model = Product
+    template_name = 'home.html'
 
 # Products
 class ProductListView(generic.TemplateView):
