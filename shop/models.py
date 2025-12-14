@@ -25,6 +25,9 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.name}"
+
     def save(self, *args, **kwargs):
         if not self.slug:
             base_slug = slugify(self.name)
@@ -37,9 +40,6 @@ class Product(models.Model):
 
     def is_in_stock(self):
         return self.stock > 0
-
-    def __str__(self):
-        return f"{self.name}"
 
 # ------------------------------
 # Order / OrderItem
@@ -57,6 +57,9 @@ class Order(models.Model):
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.order_id} {self.status} {self.user}"
 
     def save(self, *args, **kwargs):
         if not self.order_id:
@@ -91,7 +94,6 @@ class Order(models.Model):
         self.total_price = total
         self.save(update_fields=["total_price", "updated_at"])
 
-
     def to_pending(self):
         """
         Перевод корзины в заказ и генерация order_id.
@@ -120,10 +122,6 @@ class Order(models.Model):
         """
         cutoff = timezone.now() - timedelta(days=days)
         cls.objects.filter(status="pending", created_at__lt=cutoff).delete()
-
-
-    def __str__(self):
-        return f"{self.order_id} {self.status} {self.user}"
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
@@ -218,4 +216,3 @@ def update_order_total(sender, instance, **kwargs):
 def check_auto_payment(sender, instance, created, **kwargs):
     if created and instance.status == "pending":
         Payment.process_auto(instance.order.user)
-

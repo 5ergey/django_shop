@@ -15,7 +15,11 @@ from user.models import UserToken, UserProfile
 @pytest.fixture
 def user(db):
     """Создает обычного пользователя с профилем и нулевым балансом."""
-    user = User.objects.create_user(username="testuser", password="pass123")
+    user = User.objects.create_user(
+        username="testuser",
+        password="pass123",
+        email="test@example.com",
+    )
     # UserProfile создается автоматически через сигнал post_save
     profile = user.userprofile
     profile.balance = Decimal("0.0")

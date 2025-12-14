@@ -38,7 +38,7 @@ class TestOrder:
         # old_order.created_at = timezone.now() - timedelta(days=120)
         # old_order.save()
 
-        # Создаём второй заказ «120 дней назад»
+        # Создаём второй заказ «10 дней назад»
         many_days_ago = timezone.now() - timedelta(days=120)
         with freeze_time(many_days_ago):
             old_order = make_order(user=user, status="pending")

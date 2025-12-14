@@ -4,9 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        {% block title %}{% endblock %}
-    </title>
+    <title>{% block title %}      {% endblock %}</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +21,7 @@
 <!-- Header -->
 <header>
     <div class="header-container">
-        <a href="home.html" class="header__logo">
+        <a href="/" class="header__logo">
             <img src="{% static 'img/logo.svg' %}" alt="Hop & Barley Logo">
             <p class="logo-text">Hop & Barley</p>
         </a>
@@ -37,34 +35,53 @@
             </ul>
         </nav>
 
-        <!-- Block for unauthorized user -->
-        <div class="header__auth-buttons" id="auth-guest">
-            <a href="auth/login.html" class="button button--secondary">Sign in</a>
-            <a href="auth/register.html" class="button button--primary">Register</a>
-        </div>
 
-        <!-- Block for authorized user -->
-        <div class="header__user-actions" id="auth-user">
-            <a href="account/account.html" class="user-icon" aria-label="My Account" title="Аккаунт">>
-                <img src="{% static 'img/icons/User_alt.svg' %}" alt="User Account">
-            </a>
-            <a href="shop/cart.html" class="cart-icon" aria-label="Shopping Cart" title="Корзина">>
-                <img src="{% static '/img/icons/Shopping_bag.svg' %}" alt="Shopping Cart">
-            </a>
-            <form method="post" action="logout.html">
-                <button type="submit" class="logout-icon" title="Выйти">
-                    <i class="fa-solid fa-right-from-bracket fa-2x"></i>
-                </button>
-            </form>
-        </div>
+        {% if request.user.is_authenticated %}
+            <!-- Block for authorized user -->
+            <div class="header__user-actions" id="auth-user">
+                <a href="account.html" class="user-icon" aria-label="My Account" title="Аккаунт">
+                    <img src="{% static 'img/icons/User_alt.svg' %}" alt="User Account">
+                </a>
+
+                <a href="{% url 'shop_order' %}" class="cart-icon" aria-label="Shopping Cart" title="Корзина">
+                    <img src="{% static 'img/icons/Shopping_bag.svg' %}" alt="Shopping Cart">
+                </a>
+
+                <form method="post" action="{% url 'auth_logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-icon" title="Выйти">
+                        <i class="fa-solid fa-right-from-bracket fa-2x"></i>
+                    </button>
+                </form>
+            </div>
+        {% else %}
+            <!-- Block for unauthorized user -->
+            <div class="header__auth-buttons" id="auth-guest2">
+                <a href="{% url 'auth_login' %}" class="button button--secondary">Sign in</a>
+                <a href="{% url 'auth_registration' %}" class="button button--primary">Register</a>
+            </div>
+
+        {% endif %}
+
     </div>
 </header>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
 {% block content %}
+
+
 {% endblock %}
 
 <!-- Footer -->
 <footer>
-    <img src="{% static '/img/background/image-footer.svg' %}" alt="Hop & Barley Hops Logo" class="footer__hops-logo">
+    <img src="{% static 'img/background/image-footer.svg' %}" alt="Hop & Barley Hops Logo" class="footer__hops-logo">
     <nav class="footer__nav">
         <ul>
             <li><a href="#">Contact</a></li>

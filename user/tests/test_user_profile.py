@@ -28,6 +28,11 @@ class TestUserProfile:
     def test_cart_auto_deleted_after_7_days(self, user):
         """Корзина старше 7 дней удаляется при следующем вызове get_cart."""
         profile = user.userprofile
+        # cart = profile.get_cart()  # Убрали (user)
+        # # Симулируем старую корзину
+        # cart.updated_at = timezone.now() - timedelta(days=8)
+        # cart.save()
+        #
         many_days_ago = timezone.now() - timedelta(days=8)
         with freeze_time(many_days_ago):
             cart = profile.get_cart()

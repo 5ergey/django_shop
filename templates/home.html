@@ -1,7 +1,8 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
+
 {% block title %}
-Каталог товаров | Hop & Barley
+    Каталог товаров | Hop & Barley
 {% endblock %}
 
 {% block content %}
@@ -63,20 +64,18 @@
 
             <div class="product-grid">
                 {% for product in object_list %}
-                        <a href="products/product-citra-hops.html" class="product-card-link">
-                            <div class="product-card">
-                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-card__image">
-                                <div class="product-card__info">
-                                    <h4 class="product-card__name">{{ product.name }}</h4>
-                                    <p class="product-card__price">${{ product.price }}</p>
-                                    <p class="product-card__description">{{ product.description }}</p>
-                                </div>
+                    <a href="products/product-citra-hops.html" class="product-card-link">
+                        <div class="product-card">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-card__image">
+                            <div class="product-card__info">
+                                <h4 class="product-card__name">{{ product.name }}</h4>
+                                <p class="product-card__price">${{ product.price }}</p>
+                                <p class="product-card__description">{{ product.description|truncatechars:70 }}</p>
                             </div>
-                        </a>
-
+                        </div>
+                    </a>
                 {% endfor %}
             </div>
-
 
             <div class="pagination">
                 <a href="#" class="pagination__link pagination__link--prev">
@@ -98,4 +97,5 @@
         </section>
     </div>
 </main>
+
 {% endblock %}
