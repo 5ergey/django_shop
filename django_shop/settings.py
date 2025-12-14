@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     # ------ Приложения ------
-    'rest_framework',
     'adminapp',
     'shop',
     'user',

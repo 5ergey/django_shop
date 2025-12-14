@@ -5,7 +5,6 @@ shop_urls = [
     ("home", shop_views.HomeView, "???", 200),
 
     # Products
-    ("shop_home", shop_views.HomeView, "???", 200),
     ("shop_products", shop_views.ProductListView, "???", 200),
     ("shop_products_search", shop_views.ProductSearchView, "???", 200),
     ("shop_product_detail", shop_views.ProductDetailView, "{'pk': 1}", 200),
