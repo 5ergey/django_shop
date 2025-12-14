@@ -2,7 +2,7 @@ import pytest
 from django.core import mail
 from django.core.mail import send_mail
 
-from main.settings import *
+from django_shop.settings import *
 EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
 
 

@@ -17,7 +17,7 @@ class LoginView(auth_views.LoginView):
 
 
 class LogoutView(auth_views.LogoutView):
-    next_page = reverse_lazy("home")
+    next_page = "/"
 
 
 class RegistrationView(generic.FormView):
