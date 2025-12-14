@@ -4,6 +4,6 @@ from user.views import views_account
 
 
 urlpatterns = [
-    path("account_profile", views_account.ProfileView.as_view(), name="account_profile"),
-    path("account_orders", views_account.OrderHistoryView.as_view(), name="account_orders"),
+    path("profile/", views_account.ProfileView.as_view(), name="account_profile"),
+    path("orders/", views_account.OrderHistoryView.as_view(), name="account_orders"),
 ]
