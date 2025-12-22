@@ -41,6 +41,12 @@ class Product(models.Model):
     def is_in_stock(self):
         return self.stock > 0
 
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=False, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 # ------------------------------
 # Order / OrderItem
 # ------------------------------
