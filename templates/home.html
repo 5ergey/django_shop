@@ -24,22 +24,12 @@
             <div class="sidebar__section">
                 <h3 class="section-title">Product Type</h3>
                 <div class="checkbox-group">
-                    <label class="checkbox-container">Hops
+                    {% for category in categories %}
+                        <label class="checkbox-container"> {{ category.name }}
                         <input type="checkbox" data-keyword="Hops">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">Malts
-                        <input type="checkbox" data-keyword="Malts">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">Yeast
-                        <input type="checkbox" data-keyword="Yeast">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">Adjuncts
-                        <input type="checkbox" data-keyword="Adjuncts">
-                        <span class="checkmark"></span>
-                    </label>
+                        <span class="checkmark"></span></label>
+                    {% endfor %}
+
                 </div>
             </div>
         </aside>
