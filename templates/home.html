@@ -51,7 +51,7 @@
 
             <div class="product-grid">
                 {% for product in object_list %}
-                    <a href="products/product-citra-hops.html" class="product-card-link">
+                    <a href="shop/{{ product.slug }}" class="product-card-link">
                         <div class="product-card">
                             <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-card__image">
                             <div class="product-card__info">

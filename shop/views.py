@@ -1,5 +1,6 @@
 from django.views import generic
 
+from conftest import product
 from shop.models import Product, Category
 
 
@@ -42,14 +43,16 @@ class HomeView(generic.ListView):
         return queryset
 
 # Products
-class ProductListView(generic.TemplateView):
-    pass
 
-class ProductSearchView(generic.TemplateView):
-    pass
 
-class ProductDetailView(generic.TemplateView):
-    pass
+
+class ProductDetailView(generic.DetailView):
+    model = Product
+    slug_field = "slug"
+    slug_url_kwarg = "product_slug"
+
+    def get_template_names(self):
+        return [f"products/product-{self.object.slug}.html"]
 
 class ProductReviewAddView(generic.TemplateView):
     pass
