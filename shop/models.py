@@ -17,7 +17,7 @@ class Product(models.Model):
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     unit = models.CharField(max_length=50, default="шт")
-    category_id = models.IntegerField(default=1)
+    category = models.ForeignKey('Category', on_delete=models.PROTECT)
     image = models.ImageField(upload_to="products/", blank=True, null=True)
     specs = models.JSONField(default=dict, blank=True)
     is_active = models.BooleanField(default=True)

@@ -12,43 +12,40 @@
         <img src="{% static 'img/background/hopfen-fields.jpg' %}" alt="Beautiful hops on a dark background" class="hero-banner__image">
         <div class="hero-banner__overlay"></div>
     </section>
-
-    <div class="container main-content-grid">
+    <form action="" method="get" id="filter-form">
+    <input type="hidden" name="sort" id="sort-input" value="{{ selected_sort }}">
+        <div class="container main-content-grid">
         <aside class="sidebar filter-menu">
-            <div class="sidebar__section">
-                <h3 class="section-title">Keywords</h3>
-                <div class="keywords-list">
-                </div>
-            </div>
-
+         {% if categories %}
             <div class="sidebar__section">
                 <h3 class="section-title">Product Type</h3>
                 <div class="checkbox-group">
                     {% for category in categories %}
                         <label class="checkbox-container"> {{ category.name }}
-                        <input type="checkbox" data-keyword= {{ category.name }}>
+                        <input type="checkbox"
+                                name="filter"
+                                value="{{ category.name }}"
+                                {% if category.name in selected_categories %}checked{% endif %}>
                         <span class="checkmark"></span></label>
                     {% endfor %}
-
                 </div>
+            {% endif %}
             </div>
         </aside>
 
         <section class="products-area product-grid-section">
             <div class="search-sort-bar">
                 <div class="search-input-wrapper">
-                    <input type="text" placeholder="Search" class="search-input">
-                    <button class="search-button" aria-label="Search">
+                    <input type="text" placeholder="Search" class="search-input" name="search" value="{{ request.GET.search }}">
+                    <button class="search-button" aria-label="Search" type="submit">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
                 <div class="sort-options">
-                    <button class="sort-button active-sort">
-                        <span>New</span>
-                    </button>
-                    <button class="sort-button">Price ascending</button>
-                    <button class="sort-button">Price descending</button>
-                    <button class="sort-button">Rating</button>
+                    <button type="button" class="sort-button {% if selected_sort == "new" %} active-sort {% endif %}" data-sort="new">New</button>
+                    <button type="button" class="sort-button {% if selected_sort == "price_asc" %} active-sort {% endif %}" data-sort="price_asc">Price ascending</button>
+                    <button type="button" class="sort-button {% if selected_sort == "price_desc" %} active-sort {% endif %}" data-sort="price_desc">Price descending</button>
+                    <button type="button" class="sort-button {% if selected_sort == "rating" %} active-sort {% endif %}" data-sort="rating">Rating</button>
                 </div>
             </div>
 
@@ -66,26 +63,33 @@
                     </a>
                 {% endfor %}
             </div>
-
-            <div class="pagination">
-                <a href="#" class="pagination__link pagination__link--prev">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span>Previous</span>
-                </a>
-                <div class="pagination-list">
-                    <a href="#" class="pagination__link active">1</a>
-                    <a href="#" class="pagination__link">2</a>
-                    <a href="#" class="pagination__link">3</a>
-                    <span class="pagination__dots">...</span>
-                    <a href="#" class="pagination__link">20</a>
+                {% if is_paginated %}
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}{% if query_string %}&{{ query_string }}{% endif %}"
+                           class="pagination__link pagination__link--prev">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            <span>Previous</span>
+                        </a>
+                    {% endif %}
+                
+                    <div class="pagination-list">
+                        {% for p in paginator.page_range %}
+                            <a href="?page={{ p }}{% if query_string %}&{{ query_string }}{% endif %}" class="pagination__link {% if page_obj.number == p %}active{% endif %}">{{ p }}</a>
+                        {% endfor %}
+                    </div>
+                
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% if query_string %}&{{ query_string }}{% endif %}" class="pagination__link pagination__link--next">
+                            <span>Next</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    {% endif %}
                 </div>
-                <a href="#" class="pagination__link pagination__link--next">
-                    <span>Next</span>
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
-            </div>
+                {% endif %}
         </section>
     </div>
+    </form>
 </main>
 
 {% endblock %}
