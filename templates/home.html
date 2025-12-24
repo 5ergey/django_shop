@@ -61,6 +61,10 @@
                             </div>
                         </div>
                     </a>
+                    {% empty %}
+                        <div class="catalog-empty">
+                            <p>По заданным фильтрам товары не найдены.</p>
+                        </div>
                 {% endfor %}
             </div>
                 {% if is_paginated %}

@@ -6,7 +6,7 @@ from shop.models import Product, Category
 class HomeView(generic.ListView):
     model = Product
     template_name = 'home.html'
-    paginate_by = 3
+    paginate_by = 6
 
 
     def get_context_data(self, **kwargs):
