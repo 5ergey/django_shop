@@ -1,6 +1,10 @@
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.template.context_processors import request
 from django.views import generic
 from django.db.models import Q
-from shop.models import Product, Category
+from shop.models import Product, Category, Order
+
 
 
 class HomeView(generic.ListView):
@@ -67,8 +71,10 @@ class ProductReviewListView(generic.TemplateView):
 
 
 # Orders
-class OrderListView(generic.TemplateView):
-    pass
+class OrderListView(generic.ListView):
+    model = Product
+    template_name = "shop/cart.html"
+
 
 class OrderAddView(generic.TemplateView):
     pass

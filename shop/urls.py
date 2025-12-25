@@ -4,14 +4,15 @@ from . import views as shop_views
 urlpatterns = [
     path("", shop_views.HomeView.as_view(), name="home"),
 
-    # Products
+
     path("products/", shop_views.HomeView.as_view(), name="home"),
+    path("order/", shop_views.OrderListView.as_view(), name="shop_order"),
     path("<slug:product_slug>/", shop_views.ProductDetailView.as_view(), name="shop_product_detail"),
     path("product_review_add/", shop_views.ProductReviewAddView.as_view(), name="shop_product_review_add"),
     path("product_reviews/", shop_views.ProductReviewListView.as_view(), name="shop_product_reviews"),
 
     # Orders
-    path("order/", shop_views.OrderListView.as_view(), name="shop_order"),
+
     path("order_add/", shop_views.OrderAddView.as_view(), name="shop_order_add"),
     path("order_remove/", shop_views.OrderRemoveView.as_view(), name="shop_order_remove"),
     path("order_update/", shop_views.OrderUpdateView.as_view(), name="shop_order_update"),
