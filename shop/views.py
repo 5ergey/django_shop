@@ -1,6 +1,5 @@
 from django.views import generic
-
-from conftest import product
+from django.db.models import Q
 from shop.models import Product, Category
 
 
@@ -28,7 +27,13 @@ class HomeView(generic.ListView):
             queryset = queryset.filter(category__name__in=filter_param)
         if self.request.GET.get('search'):
             search_param = self.request.GET.get('search')
-            queryset = queryset.filter(name__icontains=search_param)
+            queryset = queryset.filter(
+                Q(name__icontains=search_param) |
+                Q(price__icontains=search_param) |
+                Q(category__name__icontains=search_param) |
+                Q(specs__icontains=search_param) |
+                Q(description__icontains=search_param)
+            ).distinct()
         if self.request.GET.get('sort'):
             sort_param = self.request.GET.get('sort', 'new')
             if sort_param == 'new':
