@@ -50,9 +50,9 @@ class ProductDetailView(generic.DetailView):
     model = Product
     slug_field = "slug"
     slug_url_kwarg = "product_slug"
+    template_name = "products/product-detail.html"
 
-    def get_template_names(self):
-        return [f"products/product-{self.object.slug}.html"]
+
 
 class ProductReviewAddView(generic.TemplateView):
     pass
